@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APPLICATION FORM</title>
+    <style>
+        /* 🚨 නව CSS එකතු කිරීම: PC වලදී ජංගම තිර ප්‍රමාණයට සීමා කිරීම */
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 10px; 
+            margin-top: 5px; 
+            /* PC වලදී උපරිම පළල සීමා කිරීම */
+            max-width: 450px; 
+            margin-left: auto; /* මධ්‍යගත කිරීම */
+            margin-right: auto; /* මධ්‍යගත කිරීම */
+            background-color: #f4f4f4; /* පිටත පසුබිමට සුළු අළු පැහැයක් */
+            border-radius: 8px;
+        }
+        
+        /* අතිරේකව, ප්‍රධාන අන්තර්ගතය සඳහා සුදු පසුබිමක් දමමු */
+        .main-content {
+             padding: 10px;
+             background-color: white;
+        }
+        /* 🚨 නව CSS අවසන් */
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="email"], select, textarea, input[type="date"] {
+            width: 100%;
+            padding: 10px; 
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            resize: none; 
+        }
+        
+        #numberOfDays {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+            font-weight: bold;
+        }
+        
+        /* 🎨 Submit Button Styling (Blue/White) */
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box; 
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover { background-color: #0056b3; }
+        
+        /* 🔵 Style for disabled state (Used when loading - PLEASE WAIT....) */
+        button:disabled { 
+            background-color: #007bff; 
+            color: white; 
+            cursor: progress; 
+            opacity: 0.9;
+            border: none;
+        } 
+        
+        #schoolName, #workplaceName { 
+            display: none; 
+            margin-top: 10px; 
+            border-left: 3px solid #007bff; 
+            padding-left: 10px;
+        }
+        
+        /* *** SUCCESS OVERLAY AND PANEL STYLES *** */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); 
+            display: flex;
+            justify-content: center;
+            
+            align-items: flex-start; 
+            padding-top: 30%; /* Success box position */
+            
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px); 
+            
+            z-index: 1000;
+            visibility: hidden; 
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .success-panel {
+            background-color: #ffffff; 
+            padding: 25px 30px;
+            max-width: 280px;
+            width: 90%;
+            border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
+            text-align: center;
+            border: 1px solid #c8e6c9; 
+            transform: scale(0.95);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .is-visible .success-panel {
+             transform: scale(1);
+        }
+
+        /* 🖼️ ICON STYLING */
+        .large-tick {
+            font-size: 4em; 
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .large-tick::before {
+            content: "✨"; 
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .success-text {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        /* Application Number Display Styling */
+        .app-no-display {
+            background-color: #e9f7f9; 
+            border: 1px dashed #007bff; 
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center; 
+        }
+
+        .app-no-display strong {
+            display: block; 
+            font-size: 0.9em;
+            color: red; 
+            font-weight: bold; 
+            margin-bottom: 5px;
+        }
+
+        .app-no-display span {
+            font-size: 1.2em; 
+            font-weight: 900;
+            color: #333;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        /* Note Style is BLACK */
+        .note {
+            color: black; 
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .is-visible {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* *** END SUCCESS OVERLAY STYLES *** */
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h2><center>MEDICAL APPLICATION FORM</center></h2></Br></Br>
+
+        <form id="dataForm" method="POST" action="https://script.google.com/macros/s/AKfycbyl-6oy1CVI4AJwG6TRVN6mWrSZ0L2yvTamJU45Dqyg_By04wbBubOBscOLQvHiWEPT/exec">
+
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="Full Name" oninput="this.value = this.value.toUpperCase()" required> 
+            </div>
+
+            <div class="form-group">
+                <label for="nricNumber">NRIC Number:</label>
+                <input type="text" id="nricNumber" name="NRIC Number" oninput="this.value = this.value.toUpperCase()" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">Select Category:</label>
+                <select id="category" name="Category" onchange="toggleFields(this.value)" required>
+                    <option value="" disabled selected>-- Select an option --</option>
+                    <option value="Education">Education</option>
+                    <option value="Job">Job</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group" id="schoolName">
+                <label for="school">School / Institution Name:</label> 
+                <input type="text" id="school" name="School/Institution" oninput="this.value = this.value.toUpperCase()" required>
+            </div>
+
+            <div class="form-group" id="workplaceName">
+                <label for="workplace">Workplace Name:</label>
+                <input type="text" id="workplace" name="Workplace" oninput="this.value = this.value.toUpperCase()" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="Email Address" required>
+            </div>
+
+            <hr>
+            <h3>⭕ Medical Application Details</h3>
+
+            <div class="form-group">
+                <label for="medicalReason">Reason for Medical Application:</label>
+                <textarea id="medicalReason" name="Medical Reason" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="startDate">Required Medical Leave Start Date:</label>
+                <input type="date" id="startDate" name="Start Date" required onchange="calculateDays()">
+            </div>
+
+            <div class="form-group">
+                <label for="endDate">Required Medical Leave End Date:</label>
+                <input type="date" id="endDate" name="End Date" required onchange="calculateDays()">
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfDays">Calculated Number of Days:</label>
+                <input type="text" id="numberOfDays" name="Number of Days" value="" readonly required>
+            </div>
+            
+            <hr>
+            <button type="submit" id="submitButton">SUBMIT DATA</button> 
+        </form>
+    </div>
+    
+    <div id="successOverlay" class="overlay">
+        <div class="success-panel">
+            <div class="large-tick"></div> 
+            
+            <div class="success-text">Data Successfully Submitted!</div> 
+            
+            <div class="app-no-display">
+                <strong>APPLICATION NUMBER</strong> 
+                <span id="displayAppNo"></span> 
+            </div>
+            
+            <div class="note">Enter this application number to check the status of the medical certificate.</div> 
+        </div>
+    </div>
+
+    <script>
+        // Category Fields Visibility
+        function toggleFields(selection) {
+            const schoolDiv = document.getElementById('schoolName');
+            const workplaceDiv = document.getElementById('workplaceName');
+            const schoolInput = document.getElementById('school');
+            const workplaceInput = document.getElementById('workplace');
+
+            schoolDiv.style.display = 'none';
+            workplaceDiv.style.display = 'none';
+            schoolInput.removeAttribute('required');
+            workplaceInput.removeAttribute('required');
+            schoolInput.value = '';
+            workplaceInput.value = '';
+
+            if (selection === 'Education') {
+                schoolDiv.style.display = 'block';
+                schoolInput.setAttribute('required', 'required');
+            } else if (selection === 'Job') {
+                workplaceDiv.style.display = 'block';
+                workplaceInput.setAttribute('required', 'required');
+            }
+        }
+
+        // Calculate the number of days (Inclusive logic)
+        function calculateDays() {
+            const start = document.getElementById('startDate').value;
+            const end = document.getElementById('endDate').value;
+            const daysInput = document.getElementById('numberOfDays');
+
+            if (start && end) {
+                const startDate = new Date(start);
+                const endDate = new Date(end);
+
+                const timeDifference = endDate.getTime() - startDate.getTime();
+                const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+                if (dayDifference >= 0) {
+                    daysInput.value = Math.floor(dayDifference) + 1; 
+                } else {
+                    daysInput.value = 'Invalid Dates';
+                    alert("End Date cannot be before Start Date. Please select valid dates.");
+                }
+            } else {
+                daysInput.value = '';
+            }
+        }
+        
+        // Function to format month/day/minute with leading zero
+        function pad(number) {
+            return (number < 10) ? '0' + number : number;
+        }
+
+        // Application Number ජනනය කිරීමේ ශ්‍රිතය (ඉලක්කම් දෙකක් පමණක් ගැනීම සහ 05 ලෙස Minute ලබා ගැනීම)
+        function generateApplicationNumber(nric) {
+            const now = new Date();
+            
+            const minute = pad(now.getMinutes()); // Minute (Ex: 05, 12)
+            const month = pad(now.getMonth() + 1); // Month (Ex: 01, 12)
+            const day = pad(now.getDate()); // Day (Ex: 06, 25)
+
+            let lastTwoDigits = '00';
+            
+            // NRIC අංකයේ ඇති සියලුම ඉලක්කම් පමණක් පෙරීම (Filter out only digits)
+            const digitsOnly = nric ? nric.replace(/[^0-9]/g, '') : '';
+
+            if (digitsOnly.length >= 2) {
+                // ඉලක්කම් පමණක් ඇති string එකේ අවසාන ඉලක්කම් දෙක
+                lastTwoDigits = digitsOnly.slice(-2); 
+            } else if (digitsOnly.length > 0) {
+                 // ඉලක්කම් එකක් පමණක් තිබේ නම්, 0 එකතු කිරීම
+                lastTwoDigits = '0' + digitsOnly; 
+            }
+            // digitsOnly හි කිසිවක් නොමැති නම්, lastTwoDigits = '00' ලෙස පවතී.
+
+            return `AP${minute}${month}${day}${lastTwoDigits}`; // Format: AP + Minute + Month + Day + NRIC_Last_Two_Digits
+        }
+
+
+        // Handle form submission (with Fetch API)
+        const form = document.getElementById('dataForm');
+        const submitButton = document.getElementById('submitButton');
+        const successOverlay = document.getElementById('successOverlay');
+        const displayAppNo = document.getElementById('displayAppNo'); 
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            if (document.getElementById('numberOfDays').value === 'Invalid Dates') {
+                 alert("Please fix the date range before submitting.");
+                 return;
+            }
+
+            // 1. Get current data and generate Application Number
+            const submittedNric = document.getElementById('nricNumber').value;
+            const applicationNumber = generateApplicationNumber(submittedNric);
+
+            // Change button text to PLEASE WAIT.... and disable button
+            submitButton.disabled = true;
+            submitButton.textContent = 'PLEASE WAIT....'; 
+
+            const scriptURL = form.action; 
+            const data = new FormData(form);
+            
+            // Append Application Number to be sent to Google Sheet
+            data.append('Application Number', applicationNumber); 
+
+            fetch(scriptURL, { method: 'POST', body: data })
+                .then(response => {
+                    // *** SUCCESS UI ***
+                    
+                    // 2. Update Success Panel with Application Number
+                    displayAppNo.textContent = applicationNumber;
+                    
+                    successOverlay.classList.add('is-visible'); 
+
+                    form.reset(); 
+                    document.getElementById('category').value = ""; 
+                    toggleFields(''); // Hide conditional fields
+
+                    // Hide the success panel after 60 seconds
+                    setTimeout(() => {
+                         successOverlay.classList.remove('is-visible');
+                    }, 60000); 
+                })
+                .catch(error => {
+                    // *** ERROR UI ***
+                    alert(`Data submission failed (or verification issue): ${error.message}. Please check the sheet manually.`); 
+                })
+                .finally(() => {
+                    // Restore button state
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'SUBMIT DATA'; 
+                });
+        });
+    </script>
+
+</body>
+</html>
